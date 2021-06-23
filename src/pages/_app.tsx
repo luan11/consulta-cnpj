@@ -9,6 +9,8 @@ import '../styles/globals.css';
 
 import { AppContainer } from './../styles/pages/_app';
 
+import { SettingsContextProvider } from './../contexts/SettingsContext';
+
 function MyApp({ Component, pageProps }) {
   return (
     <MuiThemeProvider theme={theme}>
@@ -17,7 +19,9 @@ function MyApp({ Component, pageProps }) {
           <Header />
 
           <main>
-            <Component {...pageProps} />
+            <SettingsContextProvider>
+              <Component {...pageProps} />
+            </SettingsContextProvider>
           </main>
 
           <Navigation />
