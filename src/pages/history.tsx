@@ -1,13 +1,15 @@
 import Head from 'next/head';
 
+import { Breadcrumb } from './../components/Breadcrumb';
+
 export default function Home() {
   return (
-    <div>
+    <>
       <Head>
         <title>Histórico | Consulta CNPJ</title>
       </Head>
 
-      <h1>Histórico</h1>
-    </div>
+      <Breadcrumb title="Histórico" />
+    </>
   );
 }

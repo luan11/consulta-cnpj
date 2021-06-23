@@ -10,5 +10,6 @@ export const AppContainer = styled.div`
     max-height: calc(100vh - 60px);
     overflow-y: auto;
     background-color: ${({ theme }) => theme.palette.grey[50]};
+    padding: ${({ theme }) => `${theme.spacing(2)}px`} 0;
   }
 `;
