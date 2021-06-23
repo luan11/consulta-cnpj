@@ -1,9 +1,7 @@
+import { getLocalStorage } from './getLocalStorage';
+
 export function buildLocalStorage(data: {}) {
-  const storage = window.localStorage.getItem('consulta_cnpj');
-
-  if (storage) {
-    return;
+  if (!getLocalStorage()) {
+    window.localStorage.setItem('consulta_cnpj', JSON.stringify(data));
   }
-
-  window.localStorage.setItem('consulta_cnpj', JSON.stringify(data));
 }

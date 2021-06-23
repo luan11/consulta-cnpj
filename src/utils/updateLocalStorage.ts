@@ -1,6 +1,7 @@
+import { getLocalStorage } from './getLocalStorage';
+
 export function updateLocalStorage(newData: {}) {
-  const storage = window.localStorage.getItem('consulta_cnpj');
-  const data = JSON.parse(storage);
+  const data = getLocalStorage();
 
   const updatedData = {
     ...data,

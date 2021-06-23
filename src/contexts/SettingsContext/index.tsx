@@ -1,8 +1,10 @@
+import { GetStaticProps } from 'next';
 import { createContext, ReactNode, useEffect, useReducer, useRef } from 'react';
 
 import { buildActions } from './buildActions';
 import { reducer } from './reducer';
 
+import { getLocalStorage } from '../../utils/getLocalStorage';
 import { buildLocalStorage } from './../../utils/buildLocalStorage';
 import { updateLocalStorage } from './../../utils/updateLocalStorage';
 
@@ -24,18 +26,6 @@ export interface SettingsContextData {
   fields: SearchFields;
 }
 
-let localInitialState: SettingsContextData | {} = {};
-
-if (process.browser) {
-  const storage = window.localStorage.getItem('consulta_cnpj');
-
-  if (storage) {
-    const data = JSON.parse(storage);
-
-    localInitialState = data.settings;
-  }
-}
-
 export const initialState: SettingsContextData = {
   history: true,
   fields: {
@@ -50,7 +40,6 @@ export const initialState: SettingsContextData = {
     capital_social: true,
     porte: true,
   },
-  ...localInitialState,
 };
 
 interface Actions {
@@ -76,10 +65,20 @@ export function SettingsContextProvider({
   const actions = useRef(buildActions(dispatch));
 
   useEffect(() => {
+    const { updateSaveHistory, updateSearchFields } = actions.current;
+
     buildLocalStorage({
       settings: initialState,
       history: {},
     });
+
+    const { settings } = getLocalStorage();
+
+    if (!settings.history) {
+      updateSaveHistory();
+    }
+
+    updateSearchFields(settings.fields);
   }, []);
 
   useEffect(() => {
