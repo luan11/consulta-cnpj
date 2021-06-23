@@ -1,7 +1,10 @@
-import { createContext, ReactNode, useReducer, useRef } from 'react';
+import { createContext, ReactNode, useEffect, useReducer, useRef } from 'react';
 
 import { buildActions } from './buildActions';
 import { reducer } from './reducer';
+
+import { buildLocalStorage } from './../../utils/buildLocalStorage';
+import { updateLocalStorage } from './../../utils/updateLocalStorage';
 
 export interface SearchFields {
   razao_social: boolean;
@@ -21,6 +24,18 @@ export interface SettingsContextData {
   fields: SearchFields;
 }
 
+let localInitialState: SettingsContextData | {} = {};
+
+if (process.browser) {
+  const storage = window.localStorage.getItem('consulta_cnpj');
+
+  if (storage) {
+    const data = JSON.parse(storage);
+
+    localInitialState = data.settings;
+  }
+}
+
 export const initialState: SettingsContextData = {
   history: true,
   fields: {
@@ -35,6 +50,7 @@ export const initialState: SettingsContextData = {
     capital_social: true,
     porte: true,
   },
+  ...localInitialState,
 };
 
 interface Actions {
@@ -58,6 +74,19 @@ export function SettingsContextProvider({
 }: SettingsContextProviderProps) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const actions = useRef(buildActions(dispatch));
+
+  useEffect(() => {
+    buildLocalStorage({
+      settings: initialState,
+      history: {},
+    });
+  }, []);
+
+  useEffect(() => {
+    updateLocalStorage({
+      settings: state,
+    });
+  }, [state]);
 
   return (
     <SettingsContext.Provider
