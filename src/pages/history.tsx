@@ -6,7 +6,7 @@ import { Alert, AlertTitle } from '@material-ui/lab';
 import { Breadcrumb } from './../components/Breadcrumb';
 import useSettingsContext from '../hooks/useSettingsContext';
 
-export default function Home() {
+export default function History() {
   const {
     state: { history },
   } = useSettingsContext();

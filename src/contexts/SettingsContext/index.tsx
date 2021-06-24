@@ -9,8 +9,6 @@ import { buildLocalStorage } from './../../utils/buildLocalStorage';
 import { updateLocalStorage } from './../../utils/updateLocalStorage';
 
 export interface SearchFields {
-  razao_social: boolean;
-  nome_fantasia: boolean;
   situacao_cadastral: boolean;
   codigo_natureza_juridica: boolean;
   data_inicio_atividades: boolean;
@@ -33,8 +31,6 @@ export interface SettingsContextData {
 export const initialState: SettingsContextData = {
   history: true,
   fields: {
-    razao_social: true,
-    nome_fantasia: true,
     situacao_cadastral: true,
     codigo_natureza_juridica: true,
     data_inicio_atividades: true,

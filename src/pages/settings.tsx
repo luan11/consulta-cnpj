@@ -14,7 +14,7 @@ import {
   Switch,
 } from '@material-ui/core';
 
-export default function Home() {
+export default function Settings() {
   const {
     state: { history, fields, colorMode },
     actions: {
@@ -58,29 +58,6 @@ export default function Home() {
             <Typography variant="caption">Dados retornados</Typography>
 
             <FormGroup>
-              <FormControlLabel
-                control={
-                  <Switch
-                    color="primary"
-                    checked={fields.razao_social}
-                    onChange={handleSearchFields}
-                    name="razao_social"
-                  />
-                }
-                label="Razão Social"
-              />
-              <FormControlLabel
-                control={
-                  <Switch
-                    color="primary"
-                    checked={fields.nome_fantasia}
-                    onChange={handleSearchFields}
-                    name="nome_fantasia"
-                  />
-                }
-                label="Nome Fantasia"
-              />
-
               <FormControlLabel
                 control={
                   <Switch
