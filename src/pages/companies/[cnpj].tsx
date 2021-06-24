@@ -1,9 +1,13 @@
+import { useEffect } from 'react';
+
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
 import Router from 'next/router';
 
 import api from './../../services/api';
 
+import { getLocalStorage } from './../../utils/getLocalStorage';
+import { updateLocalStorage } from './../../utils/updateLocalStorage';
 import { formatCnpj } from './../../utils/formatCnpj';
 
 import useSettingsContext from '../../hooks/useSettingsContext';
@@ -55,12 +59,40 @@ interface CompanyProps {
 
 export default function Company({ company }: CompanyProps) {
   const {
-    state: { fields },
+    state: { history, fields },
   } = useSettingsContext();
 
   function goBack() {
     Router.push('/');
   }
+
+  useEffect(() => {
+    if (!company.error) {
+      const storage = getLocalStorage();
+
+      if (storage && storage.settings.history) {
+        const exists = storage.history.filter((item) => {
+          return item.cnpj === company.cnpj;
+        });
+
+        if (exists.length === 0) {
+          const data = [
+            ...storage.history,
+            ...[
+              {
+                cnpj: company.cnpj,
+                date: new Date().toJSON(),
+              },
+            ],
+          ];
+
+          updateLocalStorage({
+            history: data,
+          });
+        }
+      }
+    }
+  }, [company]);
 
   return (
     <>

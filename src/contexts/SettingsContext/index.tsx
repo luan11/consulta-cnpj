@@ -80,7 +80,7 @@ export function SettingsContextProvider({
 
     buildLocalStorage({
       settings: initialState,
-      history: {},
+      history: [],
     });
 
     const { settings } = getLocalStorage();
