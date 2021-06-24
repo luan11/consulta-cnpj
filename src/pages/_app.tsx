@@ -1,7 +1,4 @@
-import { ThemeProvider } from 'styled-components';
-import { ThemeProvider as MuiThemeProvider } from '@material-ui/core';
-import theme from './../themes/theme';
-
+import { Theme } from './../components/Theme';
 import { Navigation } from './../components/Navigation';
 import { Header } from './../components/Header';
 
@@ -13,21 +10,19 @@ import { SettingsContextProvider } from './../contexts/SettingsContext';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <MuiThemeProvider theme={theme}>
-      <ThemeProvider theme={theme}>
+    <SettingsContextProvider>
+      <Theme>
         <AppContainer>
           <Header />
 
           <main>
-            <SettingsContextProvider>
-              <Component {...pageProps} />
-            </SettingsContextProvider>
+            <Component {...pageProps} />
           </main>
 
           <Navigation />
         </AppContainer>
-      </ThemeProvider>
-    </MuiThemeProvider>
+      </Theme>
+    </SettingsContextProvider>
   );
 }
 

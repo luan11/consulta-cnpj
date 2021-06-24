@@ -5,7 +5,6 @@ interface UpdateData {
   history?: boolean;
   fields?: SearchFields;
 }
-
 interface ActionProps {
   type: string;
   payload?: UpdateData;
@@ -16,7 +15,29 @@ export function reducer(
   { type, payload }: ActionProps
 ) {
   switch (type) {
-    case actionTypes.UPDATE_SAVE_HISTORY:
+    case actionTypes.ENABLE_LIGHT_MODE:
+      return {
+        ...state,
+        ...{
+          colorMode: {
+            light: true,
+            dark: false,
+          },
+        },
+      };
+
+    case actionTypes.ENABLE_DARK_MODE:
+      return {
+        ...state,
+        ...{
+          colorMode: {
+            light: false,
+            dark: true,
+          },
+        },
+      };
+
+    case actionTypes.TOGGLE_SAVE_HISTORY:
       return {
         ...state,
         ...{

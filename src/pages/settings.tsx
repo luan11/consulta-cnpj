@@ -16,18 +16,31 @@ import {
 
 export default function Home() {
   const {
-    state: { history, fields },
-    actions: { updateSaveHistory, updateSearchFields },
+    state: { history, fields, colorMode },
+    actions: {
+      enableLightMode,
+      enableDarkMode,
+      toggleSaveHistory,
+      updateSearchFields,
+    },
   } = useSettingsContext();
 
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    if (event.target.name === 'history') {
-      updateSaveHistory();
-    } else {
-      updateSearchFields({
-        [event.target.name]: event.target.checked,
-      });
-    }
+  function handleSearchFields(event: React.ChangeEvent<HTMLInputElement>) {
+    updateSearchFields({
+      [event.target.name]: event.target.checked,
+    });
+  }
+
+  function handleSaveHistory() {
+    toggleSaveHistory();
+  }
+
+  function handleLightMode() {
+    enableLightMode();
+  }
+
+  function handleDarkMode() {
+    enableDarkMode();
   }
 
   return (
@@ -41,24 +54,6 @@ export default function Home() {
       <Container>
         <Card>
           <CardContent>
-            <Typography variant="h6" gutterBottom>
-              Histórico
-            </Typography>
-
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Switch
-                    color="primary"
-                    checked={history}
-                    onChange={handleChange}
-                    name="history"
-                  />
-                }
-                label="Salvar pesquisas"
-              />
-            </FormGroup>
-
             <Typography variant="h6">Pesquisa</Typography>
             <Typography variant="caption">Dados retornados</Typography>
 
@@ -68,7 +63,7 @@ export default function Home() {
                   <Switch
                     color="primary"
                     checked={fields.razao_social}
-                    onChange={handleChange}
+                    onChange={handleSearchFields}
                     name="razao_social"
                   />
                 }
@@ -79,7 +74,7 @@ export default function Home() {
                   <Switch
                     color="primary"
                     checked={fields.nome_fantasia}
-                    onChange={handleChange}
+                    onChange={handleSearchFields}
                     name="nome_fantasia"
                   />
                 }
@@ -91,7 +86,7 @@ export default function Home() {
                   <Switch
                     color="primary"
                     checked={fields.situacao_cadastral}
-                    onChange={handleChange}
+                    onChange={handleSearchFields}
                     name="situacao_cadastral"
                   />
                 }
@@ -103,7 +98,7 @@ export default function Home() {
                   <Switch
                     color="primary"
                     checked={fields.codigo_natureza_juridica}
-                    onChange={handleChange}
+                    onChange={handleSearchFields}
                     name="codigo_natureza_juridica"
                   />
                 }
@@ -115,7 +110,7 @@ export default function Home() {
                   <Switch
                     color="primary"
                     checked={fields.data_inicio_atividades}
-                    onChange={handleChange}
+                    onChange={handleSearchFields}
                     name="data_inicio_atividades"
                   />
                 }
@@ -127,7 +122,7 @@ export default function Home() {
                   <Switch
                     color="primary"
                     checked={fields.cnae}
-                    onChange={handleChange}
+                    onChange={handleSearchFields}
                     name="cnae"
                   />
                 }
@@ -139,7 +134,7 @@ export default function Home() {
                   <Switch
                     color="primary"
                     checked={fields.endereco}
-                    onChange={handleChange}
+                    onChange={handleSearchFields}
                     name="endereco"
                   />
                 }
@@ -151,7 +146,7 @@ export default function Home() {
                   <Switch
                     color="primary"
                     checked={fields.telefone}
-                    onChange={handleChange}
+                    onChange={handleSearchFields}
                     name="telefone"
                   />
                 }
@@ -163,7 +158,7 @@ export default function Home() {
                   <Switch
                     color="primary"
                     checked={fields.capital_social}
-                    onChange={handleChange}
+                    onChange={handleSearchFields}
                     name="capital_social"
                   />
                 }
@@ -175,11 +170,55 @@ export default function Home() {
                   <Switch
                     color="primary"
                     checked={fields.porte}
-                    onChange={handleChange}
+                    onChange={handleSearchFields}
                     name="porte"
                   />
                 }
                 label="Porte"
+              />
+            </FormGroup>
+
+            <Typography variant="h6">Histórico</Typography>
+
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Switch
+                    color="primary"
+                    checked={history}
+                    onChange={handleSaveHistory}
+                    name="history"
+                  />
+                }
+                label="Salvar pesquisas"
+              />
+            </FormGroup>
+
+            <Typography variant="h6">Tema</Typography>
+
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Switch
+                    color="primary"
+                    checked={colorMode.light}
+                    onChange={handleLightMode}
+                    name="themeLight"
+                  />
+                }
+                label="Claro"
+              />
+
+              <FormControlLabel
+                control={
+                  <Switch
+                    color="primary"
+                    checked={colorMode.dark}
+                    onChange={handleDarkMode}
+                    name="themeDark"
+                  />
+                }
+                label="Escuro"
               />
             </FormGroup>
           </CardContent>

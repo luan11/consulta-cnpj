@@ -8,9 +8,17 @@ type Dispatch = (props: DispatchProps) => void;
 
 export const buildActions = (dispatch: Dispatch) => {
   return {
-    updateSaveHistory: () =>
+    enableLightMode: () =>
       dispatch({
-        type: actionTypes.UPDATE_SAVE_HISTORY,
+        type: actionTypes.ENABLE_LIGHT_MODE,
+      }),
+    enableDarkMode: () =>
+      dispatch({
+        type: actionTypes.ENABLE_DARK_MODE,
+      }),
+    toggleSaveHistory: () =>
+      dispatch({
+        type: actionTypes.TOGGLE_SAVE_HISTORY,
       }),
     updateSearchFields: (payload: {}) =>
       dispatch({

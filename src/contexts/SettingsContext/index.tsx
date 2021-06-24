@@ -24,6 +24,10 @@ export interface SearchFields {
 export interface SettingsContextData {
   history: boolean;
   fields: SearchFields;
+  colorMode: {
+    light: boolean;
+    dark: boolean;
+  };
 }
 
 export const initialState: SettingsContextData = {
@@ -40,10 +44,16 @@ export const initialState: SettingsContextData = {
     capital_social: true,
     porte: true,
   },
+  colorMode: {
+    light: true,
+    dark: false,
+  },
 };
 
 interface Actions {
-  updateSaveHistory: () => void;
+  enableLightMode: () => void;
+  enableDarkMode: () => void;
+  toggleSaveHistory: () => void;
   updateSearchFields: (payload: {}) => void;
 }
 
@@ -65,7 +75,12 @@ export function SettingsContextProvider({
   const actions = useRef(buildActions(dispatch));
 
   useEffect(() => {
-    const { updateSaveHistory, updateSearchFields } = actions.current;
+    const {
+      enableLightMode,
+      enableDarkMode,
+      toggleSaveHistory,
+      updateSearchFields,
+    } = actions.current;
 
     buildLocalStorage({
       settings: initialState,
@@ -74,8 +89,14 @@ export function SettingsContextProvider({
 
     const { settings } = getLocalStorage();
 
+    if (settings.colorMode.light) {
+      enableLightMode();
+    } else if (settings.colorMode.dark) {
+      enableDarkMode();
+    }
+
     if (!settings.history) {
-      updateSaveHistory();
+      toggleSaveHistory();
     }
 
     updateSearchFields(settings.fields);

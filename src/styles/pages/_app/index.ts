@@ -9,7 +9,7 @@ export const AppContainer = styled.div`
     flex-grow: 1;
     max-height: calc(100vh - 60px);
     overflow-y: auto;
-    background-color: ${({ theme }) => theme.palette.grey[50]};
+    background-color: ${({ theme }) => theme.palette.background.default};
     padding: ${({ theme }) => `${theme.spacing(2)}px`} 0;
   }
 `;
